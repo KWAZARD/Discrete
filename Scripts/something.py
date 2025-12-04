@@ -44,12 +44,15 @@ m1.randomize()
 print(m1)
 print(m1.matrix_list)
 dict_adjacency = {}
-lst_adjacency = []
 def adjacency_list():
+    lst_adjacency = []
     for i in range(0, len(m1.matrix_list)):
-
-        dict_adjacency.setdefault(f"v{i}", m1.matrix_list[i])
-    return print(dict_adjacency)
-
+        for j in range(0, len(m1.matrix_list)):
+            if m1.matrix_list[i][j] == 1:
+                lst_adjacency.append(f"v{j}")
+        dict_adjacency.setdefault(f"v{i}", lst_adjacency)
+        lst_adjacency = []
     print(dict_adjacency)
+
+
 adjacency_list()
