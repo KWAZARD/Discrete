@@ -1,4 +1,5 @@
 import random as rd
+from xmlrpc.client import MAXINT
 
 
 class Matrix:
@@ -44,7 +45,7 @@ m1.randomize()
 print(m1)
 print(m1.matrix_list)
 dict_adjacency = {}
-def adjacency_list():
+def matrix_to_adjacency_list():           # З матриці -> Список суміжності
     lst_adjacency = []
     for i in range(0, len(m1.matrix_list)):
         for j in range(0, len(m1.matrix_list)):
@@ -53,6 +54,15 @@ def adjacency_list():
         dict_adjacency.setdefault(f"v{i}", lst_adjacency)
         lst_adjacency = []
     print(dict_adjacency)
+matrix_to_adjacency_list()
 
+def adjency_list_to_matrix(dict_adjacency):    # з списку суміжності -> в матрицю
+    size = len(dict_adjacency)
+    matrix  = Matrix(size)
+    for i in range(size):
+        for v in dict_adjacency[f"v{i}"]:
+            j = int(v[1:])
+            matrix.matrix_list[i][j] = 1
+    return matrix
 
-adjacency_list()
+print(adjency_list_to_matrix(dict_adjacency))
