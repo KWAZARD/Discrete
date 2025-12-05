@@ -1,42 +1,73 @@
 import random as rd
 
-class Matrix:
-    def __init__(self, size: int):
-        self.__size = size
-        self.matrix_list = []
-        for i in range(self.__size):
-            self.matrix_list.append([])
-            for j in range(self.__size):
-                self.matrix_list[i].append(0)
-
-    def get_size(self):
+class MatrixGraph:
+    def get_size(self) -> int:
         return self.__size
+    
+    def get_edges(self) -> int:
+        result = 0
+        for v in self.matrix_list:
+            result += sum(v)
+        return result
 
-    def __str__(self):
+    def __str__(self) -> str:
         result = ""
         for i in range(self.get_size()):
             for j in range(self.get_size()):
                 result += str(self.matrix_list[i][j]) + "|"
             result += "\n"
         return result
-    
-    def randomize(self):
+
+    # DFS-based cycle detection algorithm from Wikipedia
+    def __dfs(self, v_number: int, visited_list: list, finished_list: list) -> bool:
+        if v_number in finished_list:
+            return False
+        if v_number in visited_list:
+            return True
+        visited_list.append(v_number)
+        result = 0
         for i in range(self.get_size()):
-            for j in range(self.get_size()):
-                if i == j:
-                    continue
-                self.matrix_list[i][j] = rd.randint(0, 1)
+            if self.matrix_list[v_number][i] == 1:
+                result += int(self.__dfs(i, visited_list, finished_list))
+        finished_list.append(v_number)
+        return bool(result)
 
-def multiply(m1: Matrix, m2: Matrix):
-    size = m1.get_size()
-    if size != m2.get_size():
-        return
-    resmat = Matrix(size)
-    for i in range(size):
-        for j in range(size):
-            pass
-
-
-m1 = Matrix(5)
-m1.randomize()
-print(m1)
+    def detect_cycle(self) -> bool:
+        result = 0
+        visited_list = []
+        finished_list = []
+        for i in range(self.get_size()):
+            if i in visited_list:
+                visited_list.remove(i)
+            if i in finished_list:
+                finished_list.remove(i)
+            result += int(self.__dfs(i, visited_list, finished_list))
+        return bool(result)
+    
+    # Erdos-Renyi-based random graph generation
+    def randomize(self, density: float) -> None:
+        graph_size = self.get_size()
+        full_graph_edges = graph_size * (graph_size - 1)
+        generate_edges = int(full_graph_edges * density)
+        for i in range(generate_edges * 10):
+            if generate_edges <= 0:
+                return
+            v1, v2 = rd.randint(0, graph_size - 1), rd.randint(0, graph_size - 1)
+            if self.matrix_list[v1][v2] == 1:
+                continue
+            self.matrix_list[v1][v2] = 1
+            if self.detect_cycle():
+                self.matrix_list[v1][v2] = 0
+            else:
+                generate_edges -= 1
+        else:
+            print("Given density is too large to generate a graph without cycles.")
+    
+    def __init__(self, size: int, density: float) -> None:
+        self.__size = size
+        self.matrix_list = []
+        for i in range(self.__size):
+            self.matrix_list.append([])
+            for j in range(self.__size):
+                self.matrix_list[i].append(0)
+        self.randomize(density)
