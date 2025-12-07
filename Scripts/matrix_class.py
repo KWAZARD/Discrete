@@ -18,7 +18,7 @@ class MatrixGraph:
             result += "\n"
         return result
 
-    # DFS-based cycle detection algorithm from Wikipedia
+    # DFS-based cycle detection algorithm from https://en.wikipedia.org/wiki/Cycle_(graph_theory)
     def __dfs(self, v_number: int, visited_list: list, finished_list: list) -> bool:
         if v_number in finished_list:
             return False
@@ -63,11 +63,18 @@ class MatrixGraph:
         else:
             print("Given density is too large to generate a graph without cycles.")
     
-    def __init__(self, size: int, density: float) -> None:
-        self.__size = size
+    def __init__(self, size: int, density: float, copy=None) -> None:
+        if copy == None:
+            self.__size = size
+        else:
+            self.__size = copy.get_size()
         self.matrix_list = []
-        for i in range(self.__size):
+        for i in range(self.get_size()):
             self.matrix_list.append([])
-            for j in range(self.__size):
-                self.matrix_list[i].append(0)
-        self.randomize(density)
+            for j in range(self.get_size()):
+                if copy == None:
+                    self.matrix_list[i].append(0)
+                else:
+                    self.matrix_list[i].append(copy.matrix_list[i][j])
+        if copy == None:
+            self.randomize(density)
