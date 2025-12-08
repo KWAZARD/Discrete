@@ -1,6 +1,6 @@
 import matplotlib
 from collections import namedtuple
-from matrix_class import *
+from matrix_and_list_class import *
 from kahn_for_matrix import *
 
 

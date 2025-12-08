@@ -1,4 +1,4 @@
-import matrix_class as mc
+import matrix_and_list_class as mc
 
 def __has_incoming_edges(m: mc.MatrixGraph, v: int) -> bool:
     if v > m.get_size() or v < 0:
