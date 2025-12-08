@@ -18,6 +18,7 @@ except ValueError:
 
 
 m = MatrixGraph(vertices, density)
+lg = ListGraph(vertices, density)
 print(kahn(m))
 
 print(f"Початково створена матриця: \n{m}")
@@ -49,7 +50,7 @@ print(f'''Перетворена з списка суміжності матри
 for row in adjacency_list_to_matrix(dict_adjacency):
     print(row)
 
-net = Network()
+net = Network(directed=True)
 
 for node in range(m.get_size()):
     net.add_node(f"v{node}",label=f"v{node}")
