@@ -90,19 +90,19 @@ class ListGraph:
 
     def get_edges(self) -> int:
         result = 0
-        for v in self.dict_list_adjacency:
+        for v in self.list_adjacency:
             result += sum(v)
         return result
 
     def __str__(self) -> str:
         dict_adjacency = {}
-        lst_adjacency = []
-        for i in range(0, len(self.dict_list_adjacency)):
-            for j in range(0, len(self.dict_list_adjacency)):
-                if self.dict_list_adjacency[i][j] == 1:
-                    lst_adjacency.append(f"v{j}")
-            dict_adjacency.setdefault(f"v{i}", lst_adjacency)
-            lst_adjacency = []
+        lst_of_vertices = []
+        for i in range(0, len(self.list_adjacency)):
+            for j in range(0, len(self.list_adjacency)):
+                if self.list_adjacency[i][j] == 1:
+                    lst_of_vertices.append(f"v{j}")
+            dict_adjacency.setdefault(f"v{i}", lst_of_vertices)
+            lst_of_vertices = []
 
         return f"Список суміжності: {dict_adjacency}"
 
@@ -116,7 +116,7 @@ class ListGraph:
         visited_list.append(v_number)
         result = 0
         for i in range(self.get_size()):
-            if self.dict_list_adjacency[v_number][i] == 1:
+            if self.list_adjacency[v_number][i] == 1:
                 result += int(self.__dfs(i, visited_list, finished_list))
         finished_list.append(v_number)
         return bool(result)
@@ -142,11 +142,11 @@ class ListGraph:
             if generate_edges <= 0:
                 return
             v1, v2 = rd.randint(0, graph_size - 1), rd.randint(0, graph_size - 1)
-            if self.dict_list_adjacency[v1][v2] == 1:
+            if self.list_adjacency[v1][v2] == 1:
                 continue
-            self.dict_list_adjacency[v1][v2] = 1
+            self.list_adjacency[v1][v2] = 1
             if self.detect_cycle():
-                self.dict_list_adjacency[v1][v2] = 0
+                self.list_adjacency[v1][v2] = 0
             else:
                 generate_edges -= 1
         else:
@@ -157,18 +157,16 @@ class ListGraph:
             self.__size = size
         else:
             self.__size = copy.get_size()
-        self.dict_list_adjacency = []
+        self.list_adjacency = []
         for i in range(self.get_size()):
-            self.dict_list_adjacency.append([])
+            self.list_adjacency.append([])
             for j in range(self.get_size()):
                 if copy == None:
-                    self.dict_list_adjacency[i].append(0)
+                    self.list_adjacency[i].append(0)
                 else:
-                    self.dict_list_adjacency[i].append(copy.dict_list_adjacency[i][j])
+                    self.list_adjacency[i].append(copy.list_adjacency[i][j])
         if copy == None:
             self.__randomize(density)
 
-n = ListGraph(5, 0.1)
-print(n)
 
 
