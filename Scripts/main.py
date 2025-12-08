@@ -31,13 +31,17 @@ def matrix_to_adjacency_list():           # З матриці -> Список с
     print(f"Список суміжності: {dict_adjacency}")
 matrix_to_adjacency_list()
 
-def adjency_list_to_matrix(dict_adjacency):    # з списку суміжності -> в матрицю
-    size = len(dict_adjacency)
-    matrix  = MatrixGraph(size, density)
-    for i in range(size):
-        for v in dict_adjacency[f"v{i}"]:
-            j = int(v[1:])
-            matrix.matrix_list[i][j] = 1
-    return matrix
+def adjacency_list_to_matrix(adjacency_list):
+    n = len(adjacency_list)                            # Ці рядки коду
+    adjacency_matrix = [[0] * n for _ in range(n)]     # допоміг написати чатГПТ
 
-print(f"Перетворена з списка суміжності матриця: \n{adjency_list_to_matrix(dict_adjacency)}")
+    for i in range(n):
+        for v in adjacency_list[f"v{i}"]:
+            j = int(v[1:])
+            adjacency_matrix[i][j] = 1
+
+    return adjacency_matrix
+
+print(f'''Перетворена з списка суміжності матриця:''')
+for row in adjacency_list_to_matrix(dict_adjacency):
+    print(row)
