@@ -3,6 +3,7 @@ import matplotlib
 from collections import namedtuple
 from matrix_class import *
 from kahn_for_matrix import *
+from covertation_of_graph import *
 
 try:
     vertices = int(input("Enter how many vertices Graph has: "))
