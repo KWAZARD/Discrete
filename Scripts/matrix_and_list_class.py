@@ -1,10 +1,12 @@
 import random as rd
 
 
+
+
 class MatrixGraph:
     def get_size(self) -> int:
         return self.__size
-    
+
     def get_edges(self) -> int:
         result = 0
         for v in self.matrix_list:
@@ -45,7 +47,7 @@ class MatrixGraph:
                 finished_list.remove(i)
             result += int(self.__dfs(i, visited_list, finished_list))
         return bool(result)
-    
+
     # Erdos-Renyi-based random graph generation
     def __randomize(self, density: float) -> None:
         graph_size = self.get_size()
@@ -63,8 +65,8 @@ class MatrixGraph:
             else:
                 generate_edges -= 1
         else:
-            print("Given density is too large to generate a graph without cycles.")
-    
+            print("Given density is too high to generate a graph without cycles. \nSo we have generated graph with max possible density")
+
     def __init__(self, size: int, density: float, copy=None) -> None:
         if copy == None:
             self.__size = size
@@ -88,17 +90,21 @@ class ListGraph:
 
     def get_edges(self) -> int:
         result = 0
-        for v in self.matrix_list:
+        for v in self.dict_list_adjacency:
             result += sum(v)
         return result
 
     def __str__(self) -> str:
-        result = ""
-        for i in range(self.get_size()):
-            for j in range(self.get_size()):
-                result += str(self.matrix_list[i][j]) + "|"
-            result += "\n"
-        return result
+        dict_adjacency = {}
+        lst_adjacency = []
+        for i in range(0, len(self.dict_list_adjacency)):
+            for j in range(0, len(self.dict_list_adjacency)):
+                if self.dict_list_adjacency[i][j] == 1:
+                    lst_adjacency.append(f"v{j}")
+            dict_adjacency.setdefault(f"v{i}", lst_adjacency)
+            lst_adjacency = []
+
+        return f"Список суміжності: {dict_adjacency}"
 
     # DFS-based cycle detection algorithm from https://en.wikipedia.org/wiki/Cycle_(graph_theory)
     def __dfs(self, v_number: int, visited_list: list, finished_list: list) -> bool:
@@ -110,7 +116,7 @@ class ListGraph:
         visited_list.append(v_number)
         result = 0
         for i in range(self.get_size()):
-            if self.matrix_list[v_number][i] == 1:
+            if self.dict_list_adjacency[v_number][i] == 1:
                 result += int(self.__dfs(i, visited_list, finished_list))
         finished_list.append(v_number)
         return bool(result)
@@ -136,30 +142,33 @@ class ListGraph:
             if generate_edges <= 0:
                 return
             v1, v2 = rd.randint(0, graph_size - 1), rd.randint(0, graph_size - 1)
-            if self.matrix_list[v1][v2] == 1:
+            if self.dict_list_adjacency[v1][v2] == 1:
                 continue
-            self.matrix_list[v1][v2] = 1
+            self.dict_list_adjacency[v1][v2] = 1
             if self.detect_cycle():
-                self.matrix_list[v1][v2] = 0
+                self.dict_list_adjacency[v1][v2] = 0
             else:
                 generate_edges -= 1
         else:
-            print("Given density is too large to generate a graph without cycles.")
+            print("Given density is too high to generate a graph without cycles. \nSo we have generated graph with max possible density")
 
     def __init__(self, size: int, density: float, copy=None) -> None:
         if copy == None:
             self.__size = size
         else:
             self.__size = copy.get_size()
-        self.matrix_list = []
+        self.dict_list_adjacency = []
         for i in range(self.get_size()):
-            self.matrix_list.append([])
+            self.dict_list_adjacency.append([])
             for j in range(self.get_size()):
                 if copy == None:
-                    self.matrix_list[i].append(0)
+                    self.dict_list_adjacency[i].append(0)
                 else:
-                    self.matrix_list[i].append(copy.matrix_list[i][j])
+                    self.dict_list_adjacency[i].append(copy.dict_list_adjacency[i][j])
         if copy == None:
             self.__randomize(density)
+
+n = ListGraph(5, 0.1)
+print(n)
 
 
