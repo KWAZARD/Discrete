@@ -1,5 +1,6 @@
 import random as rd
 
+
 class MatrixGraph:
     def get_size(self) -> int:
         return self.__size
@@ -20,6 +21,7 @@ class MatrixGraph:
 
     # DFS-based cycle detection algorithm from https://en.wikipedia.org/wiki/Cycle_(graph_theory)
     def __dfs(self, v_number: int, visited_list: list, finished_list: list) -> bool:
+
         if v_number in finished_list:
             return False
         if v_number in visited_list:
@@ -45,7 +47,7 @@ class MatrixGraph:
         return bool(result)
     
     # Erdos-Renyi-based random graph generation
-    def randomize(self, density: float) -> None:
+    def __randomize(self, density: float) -> None:
         graph_size = self.get_size()
         full_graph_edges = graph_size * (graph_size - 1)
         generate_edges = int(full_graph_edges * density)
@@ -77,4 +79,7 @@ class MatrixGraph:
                 else:
                     self.matrix_list[i].append(copy.matrix_list[i][j])
         if copy == None:
-            self.randomize(density)
+            self.__randomize(density)
+
+
+
