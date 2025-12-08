@@ -1,5 +1,8 @@
 import matplotlib
 from collections import namedtuple
+import pyvis
+from pyvis.network import Network
+
 from matrix_and_list_class import *
 from kahn_for_matrix import *
 
@@ -45,3 +48,16 @@ def adjacency_list_to_matrix(adjacency_list):
 print(f'''Перетворена з списка суміжності матриця:''')
 for row in adjacency_list_to_matrix(dict_adjacency):
     print(row)
+
+net = Network()
+
+for node in range(m.get_size()):
+    net.add_node(f"v{node}",label=f"v{node}")
+matrix = adjacency_list_to_matrix(dict_adjacency)  # або будь-яка твоя матриця
+
+for i in range(len(matrix)):
+    for j in range(len(matrix)):
+        if matrix[i][j] == 1:
+            net.add_edge(f"v{i}", f"v{j}")
+
+net.write_html("graph_visual.html", open_browser=True)
