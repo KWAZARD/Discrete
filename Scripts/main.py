@@ -1,6 +1,8 @@
 from classes import *
 import matplotlib
 from collections import namedtuple
+from matrix_class import *
+from kahn_for_matrix import *
 
 try:
     vertices = int(input("Enter how many vertices Graph has: "))
@@ -30,3 +32,6 @@ def adjacency_dict(graph):
         adj[node2].append(node1)
     return adj
 print(adjacency_dict(G))
+
+m = MatrixGraph(vertices, density)
+print(kahn(m))
