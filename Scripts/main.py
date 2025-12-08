@@ -1,6 +1,7 @@
 import matplotlib
 from collections import namedtuple
 import pyvis
+import math
 from pyvis.network import Network
 
 from matrix_and_list_class import *
@@ -50,15 +51,46 @@ print(f'''Перетворена з списка суміжності матри
 for row in adjacency_list_to_matrix(dict_adjacency):
     print(row)
 
-net = Network(directed=True)
 
-for node in range(m.get_size()):
-    net.add_node(f"v{node}",label=f"v{node}")
-matrix = adjacency_list_to_matrix(dict_adjacency)  # або будь-яка твоя матриця
+net = Network(height="900px", width="100%", bgcolor="#1e1e1e", font_color="white", directed=True)
 
+# --- додаємо вузли ---
+n = m.get_size()
+cols = math.ceil(math.sqrt(n))   # кількість колонок у сітці
+rows = math.ceil(n / cols)
+spacing = 150                    # відстань між вузлами
+
+for i in range(n):
+    row = i // cols
+    col = i % cols
+    x = col * spacing
+    y = row * spacing
+    net.add_node(
+        f"v{i}",
+        label=f"v{i}",
+        x=x,
+        y=y,
+        fixed=True,
+        physics=False,
+        size=16,
+        color="#03DAC6"
+    )
+
+# --- додаємо ребра ---
+matrix = adjacency_list_to_matrix(dict_adjacency)
 for i in range(len(matrix)):
     for j in range(len(matrix)):
         if matrix[i][j] == 1:
-            net.add_edge(f"v{i}", f"v{j}")
+            net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
+
+# --- відключаємо фізику ---
+net.set_options("""
+var options = {
+  "physics": {"enabled": false},
+  "edges": {"smooth": false, "color": {"inherit": false}},
+  "interaction": {"zoomView": true, "dragView": true, "navigationButtons": true, "hover": true},
+  "nodes": {"shape": "dot", "font": {"size": 10}}
+}
+""")
 
 net.write_html("graph_visual.html", open_browser=True)
