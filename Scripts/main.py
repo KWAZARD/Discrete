@@ -78,14 +78,13 @@ for i in range(n):
         color="#03DAC6"
     )
 
-# --- додаємо ребра ---
-# matrix = listgraph_to_matrixgraph(g)
-# for i in range(len(matrix)):
-#     for j in range(len(matrix)):
-#         if matrix[i][j] == 1:
-#             net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
+# додаємо ребра
+matrix = listgraph_to_matrixgraph(g).matrix_list
+for i in range(len(matrix)):
+    for j in range(len(matrix)):
+        if matrix[i][j] == 1:
+            net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
 
-# --- відключаємо фізику ---
 net.set_options("""
 var options = {
   "physics": {"enabled": false},
