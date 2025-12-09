@@ -29,11 +29,9 @@ print(f"Кількість ребер в матриці: {m.get_edges()}")
 def matrixgraph_to_listgraph(m: MatrixGraph) -> ListGraph:
     size = m.get_size()
 
-    # створюємо порожній граф списків
     lg = ListGraph(size, 0)
 
-    # будуємо списки суміжності
-    for i in range(size):
+    for i in range(size): # для написання цього циклу використано чат Гпт
         for j in range(size):
             if m.matrix_list[i][j] == 1:
                 lg.adj_list[i].append(j)
@@ -43,11 +41,9 @@ print(matrixgraph_to_listgraph(m))
 def listgraph_to_matrixgraph(g: ListGraph) -> MatrixGraph:
     size = g.get_size()
 
-    # створюємо порожню матрицю суміжності
     mg = MatrixGraph(size, 0)
 
-    # будуємо матрицю суміжності
-    for v in range(size):
+    for v in range(size): # для написання цього циклу використано чат Гпт
         for u in g.adj_list[v]:
             mg.matrix_list[v][u] = 1
 
