@@ -174,8 +174,6 @@ class ListGraph:
 
             self.__randomize(density)
 
-m = ListGraph(10, 0.1)
-print(m)
 
 
 
