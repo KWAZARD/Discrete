@@ -19,37 +19,43 @@ except ValueError:
 
 
 m = MatrixGraph(vertices, density)
-lg = ListGraph(vertices, density)
-print(kahn(m))
+g = ListGraph(vertices, density)
 
 print(f"Початково створена матриця: \n{m}")
 print(f"Кількість ребер в матриці: {m.get_edges()}")
-dict_adjacency = {}
-def matrix_to_adjacency_list():           # З матриці -> Список суміжності
-    lst_adjacency = []
-    for i in range(0, len(m.matrix_list)):
-        for j in range(0, len(m.matrix_list)):
+
+
+
+def matrixgraph_to_listgraph(m: MatrixGraph) -> ListGraph:
+    size = m.get_size()
+
+    # створюємо порожній граф списків
+    lg = ListGraph(size, 0)
+
+    # будуємо списки суміжності
+    for i in range(size):
+        for j in range(size):
             if m.matrix_list[i][j] == 1:
-                lst_adjacency.append(f"v{j}")
-        dict_adjacency.setdefault(f"v{i}", lst_adjacency)
-        lst_adjacency = []
-    print(f"Список суміжності: {dict_adjacency}")
-matrix_to_adjacency_list()
+                lg.adj_list[i].append(j)
 
-def adjacency_list_to_matrix(adjacency_list):
-    n = len(adjacency_list)                            # Ці рядки коду
-    adjacency_matrix = [[0] * n for _ in range(n)]     # допоміг написати чатГПТ
+    return lg
+print(matrixgraph_to_listgraph(m))
+def listgraph_to_matrixgraph(g: ListGraph) -> MatrixGraph:
+    size = g.get_size()
 
-    for i in range(n):
-        for v in adjacency_list[f"v{i}"]:
-            j = int(v[1:])
-            adjacency_matrix[i][j] = 1
+    # створюємо порожню матрицю суміжності
+    mg = MatrixGraph(size, 0)
 
-    return adjacency_matrix
+    # будуємо матрицю суміжності
+    for v in range(size):
+        for u in g.adj_list[v]:
+            mg.matrix_list[v][u] = 1
+
+    return mg
 
 print(f'''Перетворена з списка суміжності матриця:''')
-for row in adjacency_list_to_matrix(dict_adjacency):
-    print(row)
+print(listgraph_to_matrixgraph(g))
+
 
 
 net = Network(height="900px", width="100%", bgcolor="#1e1e1e", font_color="white", directed=True)
@@ -77,11 +83,11 @@ for i in range(n):
     )
 
 # --- додаємо ребра ---
-matrix = adjacency_list_to_matrix(dict_adjacency)
-for i in range(len(matrix)):
-    for j in range(len(matrix)):
-        if matrix[i][j] == 1:
-            net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
+# matrix = listgraph_to_matrixgraph(g)
+# for i in range(len(matrix)):
+#     for j in range(len(matrix)):
+#         if matrix[i][j] == 1:
+#             net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
 
 # --- відключаємо фізику ---
 net.set_options("""
