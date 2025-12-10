@@ -1,6 +1,6 @@
-import matrix_and_list_class as mc
+from matrix_and_list_class import *
 
-def __has_incoming_edges(m: mc.MatrixGraph, v: int) -> bool:
+def __has_incoming_edges(m: MatrixGraph, v: int) -> bool:
     if v > m.get_size() or v < 0:
         return None
     for i in range(m.get_size()):
@@ -9,7 +9,7 @@ def __has_incoming_edges(m: mc.MatrixGraph, v: int) -> bool:
     else:
         return False
 
-def __vertices_with_no_incoming_edge(m: mc.MatrixGraph) -> list:
+def __vertices_with_no_incoming_edge(m: MatrixGraph) -> list:
     reslist = []
     for i in range(m.get_size()):
         if not __has_incoming_edges(m, i):
@@ -17,8 +17,8 @@ def __vertices_with_no_incoming_edge(m: mc.MatrixGraph) -> list:
     return reslist
 
 # Algorithm from https://en.wikipedia.org/wiki/Topological_sorting
-def kahn(m: mc.MatrixGraph) -> list:
-    copy_mat = mc.MatrixGraph(0, 0, m)
+def kahn_for_matrix(m: MatrixGraph) -> list:
+    copy_mat = MatrixGraph(0, 0, m)
     l = []
     s = __vertices_with_no_incoming_edge(copy_mat)
     while len(s) > 0:

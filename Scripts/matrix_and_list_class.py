@@ -53,6 +53,8 @@ class MatrixGraph:
         graph_size = self.get_size()
         full_graph_edges = graph_size * (graph_size - 1)
         generate_edges = int(full_graph_edges * density)
+        if generate_edges <= 0:
+            return
         for i in range(generate_edges * 10):
             if generate_edges <= 0:
                 return
@@ -136,7 +138,8 @@ class ListGraph:
         generate_edges = int(full_edges * density)
 
         attempts = generate_edges * 10
-
+        if generate_edges <= 0:
+            return
         for _ in range(attempts):
             if generate_edges <= 0:
                 return

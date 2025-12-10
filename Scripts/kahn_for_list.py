@@ -1,4 +1,5 @@
 from matrix_and_list_class import *
+
 def __has_incoming_edges(g: ListGraph, v: int) -> bool:
     if v >= g.get_size() or v < 0:
         return None
@@ -14,7 +15,7 @@ def __vertices_with_no_incoming_edge(g: ListGraph) -> list:
             reslist.append(v)
     return reslist
 
-
+# Algorithm from https://en.wikipedia.org/wiki/Topological_sorting
 def kahn_for_list(ls: ListGraph) -> list:
     copy_ls = ListGraph(10, 0.1)
     l = []
@@ -28,6 +29,3 @@ def kahn_for_list(ls: ListGraph) -> list:
             if not __has_incoming_edges(copy_ls, i):
                 s.append(i)
     return l
-
-n = ListGraph(10, 0.1)
-print(kahn_for_list(n))
