@@ -17,7 +17,7 @@ def __vertices_with_no_incoming_edge(g: ListGraph) -> list:
 
 # Algorithm from https://en.wikipedia.org/wiki/Topological_sorting
 def kahn_for_list(ls: ListGraph) -> list:
-    copy_ls = ListGraph(10, 0.1)
+    copy_ls = ListGraph(0, 0, ls)
     l = []
     s = __vertices_with_no_incoming_edge(copy_ls)
     while len(s) > 0:
