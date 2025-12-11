@@ -66,8 +66,6 @@ class MatrixGraph:
                 self.matrix_list[v1][v2] = 0
             else:
                 generate_edges -= 1
-        else:
-            print("Given density is too high to generate a graph without cycles. \nSo we have generated graph with max possible density")
 
     def __init__(self, size: int, density: float, copy=None) -> None:
         if copy == None:
@@ -157,9 +155,6 @@ class ListGraph:
                 self.adj_list[v1].remove(v2)
             else:
                 generate_edges -= 1
-
-        else:
-            print("Given density is too high to generate a graph without cycles. \nSo we have generated graph with max possible density")
 
     def __init__(self, size: int, density: float, copy=None):
         if copy is None:
