@@ -11,30 +11,23 @@ try:
 except ValueError:
     print("You need a number")
 
-# m = MatrixGraph(vertices, density)
-# g = ListGraph(vertices, density)
-#
-# print(f"Початково створена матриця: \n{m}")
-# print(f"Кількість ребер в графі: {m.get_edges()}")
-# print(f'''Перетворені з матриці списки суміжності:''')
-# print(matrixgraph_to_listgraph(m))
-#
-#
-# print(f"Початково створені списки суміжності: \n{g}")
-# print(f"Кількість ребер в графі: {g.get_edges()}")
-# print(f'''Перетворена з списка суміжності матриця:''')
-# print(listgraph_to_matrixgraph(g))
-#
-# print(f'''Кан для матриці суміжності:''')
-# print(kahn_for_matrix(m))
-# print(f'''Кан для списків суміжності:''')
-# print(kahn_for_list(g))
+m = MatrixGraph(vertices, density)
+g = ListGraph(vertices, density)
+
+print(f"Початково створена матриця: \n{m}")
+print(f"Кількість ребер в графі: {m.get_edges()}")
+print(f'''Перетворені з матриці списки суміжності:''')
+print(matrixgraph_to_listgraph(m))
 
 
-lt = ListGraph(5, 0.1)
-k = listgraph_to_matrixgraph(lt)
-print(kahn_for_list(lt))
-print(kahn_for_matrix(k))
+print(f"Початково створені списки суміжності: \n{g}")
+print(f"Кількість ребер в графі: {g.get_edges()}")
+print(f'''Перетворена з списка суміжності матриця:''')
+print(listgraph_to_matrixgraph(g))
 
+print(f'''Кан для матриці суміжності:''')
+print(kahn_for_matrix(m))
+print(f'''Кан для списків суміжності:''')
+print(kahn_for_list(g))
 
-# visualize(m)
+visualize(m)

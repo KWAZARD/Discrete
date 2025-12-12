@@ -8,15 +8,11 @@ def visualize(m) -> None:
 
     # --- додаємо вузли ---
     n = m.get_size()
-    cols = math.ceil(math.sqrt(n))   # кількість колонок у сітці
-    rows = math.ceil(n / cols)
-    spacing = 150                    # відстань між вузлами
+    radius = 150
 
     for i in range(n):
-        row = i // cols
-        col = i % cols
-        x = col * spacing
-        y = row * spacing
+        x = math.cos(i / n * 2 * math.pi) * radius
+        y = math.sin(i / n * 2 * math.pi) * radius
         net.add_node(
             f"v{i}",
             label=f"v{i}",
@@ -24,7 +20,7 @@ def visualize(m) -> None:
             y=y,
             fixed=True,
             physics=False,
-            size=16,
+            size=5,
             color="#03DAC6"
         )
 
