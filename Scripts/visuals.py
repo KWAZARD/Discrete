@@ -8,7 +8,7 @@ def visualize(m) -> None:
 
     # --- додаємо вузли ---
     n = m.get_size()
-    radius = 150
+    radius = 500
 
     for i in range(n):
         x = math.cos(i / n * 2 * math.pi) * radius
@@ -36,7 +36,7 @@ def visualize(m) -> None:
     for i in range(len(matrix)):
         for j in range(len(matrix)):
             if matrix[i][j] == 1:
-                net.add_edge(f"v{i}", f"v{j}", width=1, color="#BB86FC")
+                net.add_edge(f"v{i}", f"v{j}", width=0.5, color="#BB86FC")
 
     net.set_options("""
     var options = {
