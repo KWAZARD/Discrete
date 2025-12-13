@@ -4,11 +4,9 @@ from kahn_for_list import  *
 import time
 
 # Initialization
-# tuple_exp_vertices = (20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
-tuple_exp_vertices = (20, 40)
+tuple_exp_vertices = (20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
 tuple_exp_density = (0.1, 0.2, 0.3, 0.4, 0.5)
-# experiments_per_combination = 20
-experiments_per_combination = 3
+experiments_per_combination = 20
 
 total_iterations = len(tuple_exp_density) * len(tuple_exp_vertices) * experiments_per_combination * 2
 count_iterations = 0

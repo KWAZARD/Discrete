@@ -1,8 +1,5 @@
 import random as rd
 
-
-
-
 class MatrixGraph:
     def get_size(self) -> int:
         return self.__size
